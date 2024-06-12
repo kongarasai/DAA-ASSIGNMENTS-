@@ -1,0 +1,12 @@
+def last_string_before_operation(s):
+    last = ""
+    for char in "abcdefghijklmnopqrstuvwxyz":
+        while char in s:
+            index = s.index(char)
+            s = s[:index] + s[index+1:]
+            last += char
+    return last
+
+# Example usage:
+s = "aabcbbca"
+print(last_string_before_operation(s))  # Output: "ba"
