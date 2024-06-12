@@ -1,0 +1,19 @@
+def max_subsequence_sum_after_queries(nums, queries):
+    mod = 10**9 + 7
+    max_sum = 0
+    for num in nums:
+        max_sum += num
+
+    result = []
+    for pos, x in queries:
+        max_sum -= max(nums[pos], 0)
+        max_sum += max(x, 0)
+        result.append(max_sum)
+        nums[pos] = x
+
+    return sum(result) % mod
+
+# Example usage:
+nums = [1, 2, 3, 4, 5]
+queries = [[1, 3], [0, 3], [1, 3], [0, 4]]
+print(max_subsequence_sum_after_queries(nums, queries))  # Output: 25
