@@ -1,0 +1,17 @@
+def k_length_apart(nums, k):
+    prev_one_index = -k - 1  # Initialize to a position that allows the first 1 to be valid
+    for i, num in enumerate(nums):
+        if num == 1:
+            if i - prev_one_index - 1 < k:
+                return False
+            prev_one_index = i
+    return True
+
+
+nums1 = [1,0,0,0,1,0,0,1]
+k1 = 2
+print(k_length_apart(nums1, k1))  # Output: True
+
+nums2 = [1,0,0,1,0,1]
+k2 = 2
+print(k_length_apart(nums2, k2))  # Output: False
