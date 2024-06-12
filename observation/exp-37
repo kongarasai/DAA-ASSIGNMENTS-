@@ -1,0 +1,29 @@
+def minTime(n, edges, hasApple):
+    from collections import defaultdict
+
+    graph = defaultdict(list)
+    for u, v in edges:
+        graph[u].append(v)
+        graph[v].append(u)
+    
+    def dfs(node, parent):
+        total_time = 0
+        for child in graph[node]:
+            if child != parent:
+                time = dfs(child, node)
+                if time > 0 or hasApple[child]:
+                    total_time += time + 2
+        return total_time
+
+    return dfs(0, -1)
+
+
+n1 = 7
+edges1 = [[0,1],[0,2],[1,4],[1,5],[2,3],[2,6]]
+hasApple1 = [False, False, True, False, True, True, False]
+print(minTime(n1, edges1, hasApple1))  # Output: 8
+
+n2 = 7
+edges2 = [[0,1],[0,2],[1,4],[1,5],[2,3],[2,6]]
+hasApple2 = [False, False, True, False, False, True, False]
+print(minTime(n2, edges2, hasApple2))  # Output: 6
