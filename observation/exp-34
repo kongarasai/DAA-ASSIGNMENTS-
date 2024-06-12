@@ -1,0 +1,44 @@
+def evaluate_boolean_expressions(variables, expressions):
+    var_dict = {var['name']: var['value'] for var in variables}
+    result = []
+    
+    for expr in expressions:
+        left_value = var_dict[expr['left_operand']]
+        right_value = var_dict[expr['right_operand']]
+        
+        if expr['operator'] == '>':
+            value = left_value > right_value
+        elif expr['operator'] == '<':
+            value = left_value < right_value
+        elif expr['operator'] == '=':
+            value = left_value == right_value
+        else:
+            raise ValueError("Unsupported operator")
+        
+        result.append({
+            'left_operand': expr['left_operand'],
+            'operator': expr['operator'],
+            'right_operand': expr['right_operand'],
+            'value': value
+        })
+    
+    return result
+
+# Example usage:
+variables = [
+    {"name": "x", "value": 66},
+    {"name": "y", "value": 77}
+]
+
+expressions = [
+    {"left_operand": "x", "operator": ">", "right_operand": "y"},
+    {"left_operand": "x", "operator": "<", "right_operand": "y"},
+    {"left_operand": "x", "operator": "=", "right_operand": "y"},
+    {"left_operand": "y", "operator": ">", "right_operand": "x"},
+    {"left_operand": "y", "operator": "<", "right_operand": "x"},
+    {"left_operand": "x", "operator": "=", "right_operand": "x"}
+]
+
+result = evaluate_boolean_expressions(variables, expressions)
+for r in result:
+    print(f"{r['left_operand']} {r['operator']} {r['right_operand']} -> {r['value']}")
