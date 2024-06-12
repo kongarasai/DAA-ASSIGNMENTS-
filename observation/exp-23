@@ -1,0 +1,14 @@
+def minimize_string(s, t):
+    result = []
+    for char in s:
+        if char == '?':
+            result.append(min(t))
+            t.remove(min(t))
+        else:
+            result.append(char)
+    return ''.join(result)
+
+# Example usage:
+s = "ab?c??"
+t = "xyz"
+print(minimize_string(s, list(t)))  # Output: "abxcyz"
