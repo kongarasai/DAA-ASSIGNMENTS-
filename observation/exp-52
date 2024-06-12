@@ -1,0 +1,14 @@
+def maxChunksToSorted(arr):
+    max_seen = 0
+    chunks = 0
+
+    for i, num in enumerate(arr):
+        max_seen = max(max_seen, num)
+        if max_seen == i:
+            chunks += 1
+
+    return chunks
+
+
+print(maxChunksToSorted([4, 3, 2, 1, 0]))  # Output: 1
+print(maxChunksToSorted([1, 0, 2, 3, 4]))  # Output: 4
