@@ -1,0 +1,39 @@
+from collections import deque
+
+def longest_subarray(nums, limit):
+    max_deque = deque()
+    min_deque = deque()
+    left = 0
+    max_len = 0
+
+    for right, num in enumerate(nums):
+        while max_deque and nums[max_deque[-1]] <= num:
+            max_deque.pop()
+        while min_deque and nums[min_deque[-1]] >= num:
+            min_deque.pop()
+        
+        max_deque.append(right)
+        min_deque.append(right)
+        
+        while nums[max_deque[0]] - nums[min_deque[0]] > limit:
+            left += 1
+            if max_deque[0] < left:
+                max_deque.popleft()
+            if min_deque[0] < left:
+                min_deque.popleft()
+        
+        max_len = max(max_len, right - left + 1)
+    
+    return max_len
+
+nums1 = [8, 2, 4, 7]
+limit1 = 4
+print(longest_subarray(nums1, limit1))  # Output: 2
+
+nums2 = [10, 1, 2, 4, 7, 2]
+limit2 = 5
+print(longest_subarray(nums2, limit2))  # Output: 4
+
+nums3 = [4, 2, 2, 2, 4, 4, 2, 2]
+limit3 = 0
+print(longest_subarray(nums3, limit3))  # Output: 3
