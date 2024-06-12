@@ -1,0 +1,10 @@
+def copy_string(source, destination, index=0):
+    if index == len(source):
+        return destination
+    else:
+        destination += source[index]
+        return copy_string(source, destination, index+1)
+
+source_str = input("Enter the source string: ")
+destination_str = ""
+print("Copied string:", copy_string(source_str, destination_str))
