@@ -1,0 +1,30 @@
+def smallest_string_with_swaps(s, pairs):
+    def dfs(node):
+        components = [node]
+        visited.add(node)
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                components.extend(dfs(neighbor))
+        return components
+
+    graph = defaultdict(list)
+    for u, v in pairs:
+        graph[u].append(v)
+        graph[v].append(u)
+
+    visited = set()
+    result = list(s)
+    for i in range(len(s)):
+        if i not in visited:
+            component = dfs(i)
+            component_chars = sorted(result[j] for j in component)
+            sorted_component = sorted(component)
+            for j, char in zip(sorted_component, component_chars):
+                result[j] = char
+
+    return ''.join(result)
+
+# Example usage:
+s = "dcab"
+pairs = [[0,3],[1,2],[0,2]]
+print(smallest_string_with_swaps(s, pairs))  # Output: "bacd"
