@@ -1,0 +1,31 @@
+import heapq
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def mergeKLists(lists):
+    ListNode.__lt__ = lambda self, other: self.val < other.val
+    heap = [node for node in lists if node]
+    heapq.heapify(heap)
+    
+    dummy = ListNode()
+    current = dummy
+    
+    while heap:
+        smallest = heapq.heappop(heap)
+        current.next = smallest
+        current = current.next
+        if smallest.next:
+            heapq.heappush(heap, smallest.next)
+    
+    return dummy.next
+
+
+list1 = ListNode(1, ListNode(4, ListNode(5)))
+list2 = ListNode(1, ListNode(3, ListNode(4)))
+list3 = ListNode(2, ListNode(6))
+
+merged_list = mergeKLists([list1, list2, list3])
+print_list(merged_list)
