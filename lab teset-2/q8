@@ -1,0 +1,35 @@
+def partition(arr, low, high, pivot):
+    pivot_index = arr.index(pivot)
+    arr[pivot_index], arr[high] = arr[high], arr[pivot_index]
+    i = low - 1
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+
+def median_of_medians(arr, k):
+    n = len(arr)
+    if n <= 5:
+        return sorted(arr)[k]
+
+    medians = []
+    for i in range(0, n, 5):
+        group = arr[i:i + 5]
+        medians.append(sorted(group)[len(group) // 2])
+
+    pivot = median_of_medians(medians, len(medians) // 2)
+    pos = partition(arr, 0, n - 1, pivot)
+
+    if pos == k:
+        return arr[pos]
+    elif pos > k:
+        return median_of_medians(arr[:pos], k)
+    else:
+        return median_of_medians(arr[pos + 1:], k - pos - 1)
+
+arr = [12, 3, 5, 7, 4, 19, 26]
+k = len(arr) // 2
+median = median_of_medians(arr, k)
+print("Median of medians:", median)
