@@ -1,0 +1,31 @@
+def subset_sum(arr, target):
+    def get_subsets_sums(arr):
+        n = len(arr)
+        subsets_sums = []
+        for i in range(1 << n):
+            subset_sum = 0
+            for j in range(n):
+                if i & (1 << j):
+                    subset_sum += arr[j]
+            subsets_sums.append(subset_sum)
+        return subsets_sums
+
+    n = len(arr)
+    left_part = arr[:n//2]
+    right_part = arr[n//2:]
+
+    left_sums = get_subsets_sums(left_part)
+    right_sums = get_subsets_sums(right_part)
+
+    left_sums_set = set(left_sums)
+
+    for sum_right in right_sums:
+        if (target - sum_right) in left_sums_set:
+            return True
+
+    return False
+
+arr = [3, 34, 4, 12, 5, 2]
+target = 9
+result = subset_sum(arr, target)
+print("Subset with target sum exists:", result)
