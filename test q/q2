@@ -1,0 +1,64 @@
+from typing import List, Optional
+
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def sortedArrayToBST(nums: List[int]) -> Optional[TreeNode]:
+    if not nums:
+        return None
+    
+    def convert(left, right):
+        if left > right:
+            return None
+        
+        # Always choose the middle element to ensure balance
+        mid = (left + right) // 2
+        
+        # Create the current node
+        node = TreeNode(nums[mid])
+        
+        # Recursively construct the left subtree and link to current node
+        node.left = convert(left, mid - 1)
+        
+        # Recursively construct the right subtree and link to current node
+        node.right = convert(mid + 1, right)
+        
+        return node
+    
+    return convert(0, len(nums) - 1)
+
+# Example usage
+nums = [-10, -3, 0, 5, 9]
+root = sortedArrayToBST(nums)
+
+# Helper function to print the tree in level order to verify correctness
+from collections import deque
+
+def print_tree(root: TreeNode):
+    if not root:
+        return "[]"
+    
+    result = []
+    queue = deque([root])
+    
+    while queue:
+        node = queue.popleft()
+        if node:
+            result.append(node.val)
+            queue.append(node.left)
+            queue.append(node.right)
+        else:
+            result.append(None)
+    
+    # Trim the trailing None values
+    while result and result[-1] is None:
+        result.pop()
+    
+    return result
+
+# Print the tree to verify it matches the expected output
+print(print_tree(root))  # Output should match one of the valid BST representations
