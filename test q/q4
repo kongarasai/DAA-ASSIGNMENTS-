@@ -2,21 +2,21 @@ def wiggleSort(nums):
     nums.sort()
     n = len(nums)
     
-    # Split the sorted array into two halves
+    
     mid = (n + 1) // 2
     small, large = nums[:mid], nums[mid:]
     
-    # Reverse both halves to start placing from the largest elements
+    
     small.reverse()
     large.reverse()
     
-    # Place elements in zigzag manner
+
     nums[::2] = small
     nums[1::2] = large
 
-# Example usage
+
 nums1 = [1, 5, 1, 1, 6, 4]
 wiggleSort(nums1)
-print(nums1)  # Output: [1, 6, 1, 5, 1, 4] or any valid wiggle order
+print(nums1)  
 
  
