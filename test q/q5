@@ -1,0 +1,36 @@
+from collections import deque
+
+def updateMatrix(mat):
+    rows, cols = len(mat), len(mat[0])
+    dist = [[float('inf')] * cols for _ in range(rows)]
+    queue = deque()
+
+    # Initialize the queue with all 0 cells
+    for r in range(rows):
+        for c in range(cols):
+            if mat[r][c] == 0:
+                dist[r][c] = 0
+                queue.append((r, c))
+    
+    # Directions for moving in the matrix
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    
+    # BFS from all 0 cells
+    while queue:
+        r, c = queue.popleft()
+        
+        for dr, dc in directions:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < rows and 0 <= nc < cols:
+                if dist[nr][nc] > dist[r][c] + 1:
+                    dist[nr][nc] = dist[r][c] + 1
+                    queue.append((nr, nc))
+    
+    return dist
+
+# Example usage
+mat1 = [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
+mat2 = [[0, 0, 0], [0, 1, 0], [1, 1, 1]]
+
+print(updateMatrix(mat1))  # Output: [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
+print(updateMatrix(mat2))  # Output: [[0, 0, 0], [0, 1, 0], [1, 2, 1]]
