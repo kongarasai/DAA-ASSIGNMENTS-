@@ -5,17 +5,17 @@ def updateMatrix(mat):
     dist = [[float('inf')] * cols for _ in range(rows)]
     queue = deque()
 
-    # Initialize the queue with all 0 cells
+    
     for r in range(rows):
         for c in range(cols):
             if mat[r][c] == 0:
                 dist[r][c] = 0
                 queue.append((r, c))
     
-    # Directions for moving in the matrix
+    
     directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
     
-    # BFS from all 0 cells
+    
     while queue:
         r, c = queue.popleft()
         
@@ -28,7 +28,7 @@ def updateMatrix(mat):
     
     return dist
 
-# Example usage
+
 mat1 = [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
 mat2 = [[0, 0, 0], [0, 1, 0], [1, 1, 1]]
 
