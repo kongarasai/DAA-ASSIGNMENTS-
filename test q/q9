@@ -1,0 +1,22 @@
+def repeatedStringMatch(a, b):
+    len_a = len(a)
+    len_b = len(b)
+    
+    # Minimum number of repeats needed
+    min_repeats = (len_b + len_a - 1) // len_a  # This is the ceiling of len_b / len_a
+    
+    # Check if b is a substring of a repeated min_repeats times or (min_repeats + 1) times
+    repeated_a_min = a * min_repeats
+    repeated_a_plus_one = a * (min_repeats + 1)
+    
+    if b in repeated_a_min:
+        return min_repeats
+    elif b in repeated_a_plus_one:
+        return min_repeats + 1
+    else:
+        return -1
+
+# Example usage
+a = "abcd"
+b = "cdabcdab"
+print(repeatedStringMatch(a, b))  # Output: 3
