@@ -1,0 +1,13 @@
+def isPrefixOfWord(sentence, searchWord):
+    words = sentence.split()
+    
+    for index, word in enumerate(words):
+        if word.startswith(searchWord):
+            return index + 1  # Return 1-indexed position
+    
+    return -1  # If no word is found
+
+# Example usage:
+sentence = "i love eating burger"
+searchWord = "burg"
+print(isPrefixOfWord(sentence, searchWord))  # Output: 4
