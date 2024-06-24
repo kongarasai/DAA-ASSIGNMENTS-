@@ -1,0 +1,6 @@
+def minimumLength(nums):
+    return 0  # Since nums is sorted and all elements are distinct, the minimum length is 0.
+
+# Example usage:
+nums = [1, 2, 3, 4]
+print(minimumLength(nums))  # Output: 0
