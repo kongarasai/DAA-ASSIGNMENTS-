@@ -1,0 +1,25 @@
+def longestNiceSubstring(s):
+    def is_nice(sub):
+        char_set = set(sub)
+        for c in char_set:
+            if c.swapcase() not in char_set:
+                return False
+        return True
+
+    def find_nice_substring(s):
+        if len(s) < 2:
+            return ""
+        
+        for i in range(len(s)):
+            if s[i].swapcase() not in s:
+                left = find_nice_substring(s[:i])
+                right = find_nice_substring(s[i+1:])
+                return left if len(left) >= len(right) else right
+        
+        return s
+    
+    return find_nice_substring(s)
+
+# Example usage:
+s = "YazaAay"
+print(longestNiceSubstring(s))  # Output: "aAa"
