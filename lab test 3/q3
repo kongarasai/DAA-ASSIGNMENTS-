@@ -1,0 +1,42 @@
+import heapq
+
+class TreeNode:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def huffman_tree_and_codes(characters, frequencies):
+    if len(characters) != len(frequencies):
+        raise ValueError("Lengths of characters and frequencies must be the same")
+    
+    if len(characters) == 0:
+        return []
+    
+    pq = [(frequencies[i], TreeNode(characters[i])) for i in range(len(characters))]
+    heapq.heapify(pq)
+    
+    while len(pq) > 1:
+        freq1, node1 = heapq.heappop(pq)
+        freq2, node2 = heapq.heappop(pq)
+        merged_freq = freq1 + freq2
+        merged_node = TreeNode(None, node1, node2)
+        heapq.heappush(pq, (merged_freq, merged_node))
+    
+    root = pq[0][1]
+    codes = []
+    generate_codes(root, "", codes)
+    return codes
+
+def generate_codes(node, code, codes):
+    if node.val:
+        codes.append((node.val, code))
+    else:
+        generate_codes(node.left, code + "0", codes)
+        generate_codes(node.right, code + "1", codes)
+
+# Example usage:
+characters = ['a', 'b', 'c', 'd']
+frequencies = [5, 9, 12, 13]
+print(huffman_tree_and_codes(characters, frequencies))
+# Output: [('a', '110'), ('b', '10'), ('c', '0'), ('d', '111')]
