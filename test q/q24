@@ -1,16 +1,35 @@
-from sortedcontainers import SortedList
+class FenwickTree:
+    def __init__(self, size):
+        self.size = size
+        self.tree = [0] * (size + 1)
+    
+    def update(self, index, delta):
+        while index <= self.size:
+            self.tree[index] += delta
+            index += index & -index
+    
+    def query(self, index):
+        sum = 0
+        while index > 0:
+            sum += self.tree[index]
+            index -= index & -index
+        return sum
 
 def countPairs(nums1, nums2, diff):
     n = len(nums1)
     A = [nums1[i] - nums2[i] for i in range(n)]
-    sorted_list = SortedList()
+    
+    # Coordinate compression
+    sorted_A = sorted(set(A + [a + diff for a in A]))
+    index_map = {value: idx + 1 for idx, value in enumerate(sorted_A)}
+    
+    # Fenwick Tree to count pairs
+    fenwick_tree = FenwickTree(len(index_map))
     count = 0
-
-    for i in range(n):
-        # Count how many elements in sorted_list satisfy the condition
-        count += sorted_list.bisect_right(A[i] + diff)
-        # Add the current element to the sorted list
-        sorted_list.add(A[i])
+    
+    for a in A:
+        count += fenwick_tree.query(index_map[a + diff])
+        fenwick_tree.update(index_map[a], 1)
     
     return count
 
