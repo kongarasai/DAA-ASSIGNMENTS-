@@ -1,0 +1,54 @@
+MOD = 10**9 + 7
+
+def goodStrings(n, s1, s2, evil):
+    len_evil = len(evil)
+    
+    # Partial match table (KMP algorithm)
+    pi = [0] * len_evil
+    j = 0
+    for i in range(1, len_evil):
+        while j > 0 and evil[i] != evil[j]:
+            j = pi[j - 1]
+        if evil[i] == evil[j]:
+            j += 1
+        pi[i] = j
+
+    memo = {}
+
+    def dp(i, isPrefixS1, isPrefixS2, evilIndex):
+        if evilIndex == len_evil:
+            return 0
+        if i == n:
+            return 1
+        if (i, isPrefixS1, isPrefixS2, evilIndex) in memo:
+            return memo[(i, isPrefixS1, isPrefixS2, evilIndex)]
+        
+        result = 0
+        start_char = s1[i] if isPrefixS1 else 'a'
+        end_char = s2[i] if isPrefixS2 else 'z'
+        
+        for char in range(ord(start_char), ord(end_char) + 1):
+            char = chr(char)
+            new_isPrefixS1 = isPrefixS1 and (char == s1[i])
+            new_isPrefixS2 = isPrefixS2 and (char == s2[i])
+            
+            new_evilIndex = evilIndex
+            while new_evilIndex > 0 and char != evil[new_evilIndex]:
+                new_evilIndex = pi[new_evilIndex - 1]
+            if char == evil[new_evilIndex]:
+                new_evilIndex += 1
+            
+            result += dp(i + 1, new_isPrefixS1, new_isPrefixS2, new_evilIndex)
+            result %= MOD
+        
+        memo[(i, isPrefixS1, isPrefixS2, evilIndex)] = result
+        return result
+    
+    return dp(0, True, True, 0)
+
+# Example usage:
+n = 2
+s1 = "aa"
+s2 = "da"
+evil = "b"
+print(goodStrings(n, s1, s2, evil))  # Output: 51
