@@ -1,0 +1,16 @@
+def minRepeats(a, b):
+    # Calculate the minimum number of repeats needed
+    repeat_count = -(-len(b) // len(a))  # This is equivalent to math.ceil(len(b) / len(a))
+
+    # Check if b is a substring of a repeated 'repeat_count' or 'repeat_count + 1' times
+    if b in a * repeat_count:
+        return repeat_count
+    if b in a * (repeat_count + 1):
+        return repeat_count + 1
+
+    return -1
+
+# Example usage
+a = "abcd"
+b = "cdabcdab"
+print(minRepeats(a, b))  # Output: 3
