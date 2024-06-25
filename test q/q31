@@ -1,0 +1,12 @@
+def find_substrings(words):
+    result = []
+    for i, word in enumerate(words):
+        for j, other_word in enumerate(words):
+            if i != j and word in other_word:
+                result.append(word)
+                break
+    return result
+
+# Example usage
+words = ["mass", "as", "hero", "superhero"]
+print(find_substrings(words))  # Output: ["as", "hero"]
