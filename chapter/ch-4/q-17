@@ -1,0 +1,41 @@
+from collections import deque
+
+def cat_mouse_game(graph):
+    n = len(graph)
+    MOUSE = 1
+    CAT = 2
+    DRAW = 0
+    MOUSE_WIN = 1
+    CAT_WIN = 2
+
+    # graph[i] is a list of all nodes j such that there's an edge i -> j
+    # game_state[mouse_pos][cat_pos][turn] represents the current state of the game
+    game_state = [[[DRAW] * 3 for _ in range(n)] for _ in range(n)]
+    
+    # Fill game_state with initial positions
+    for i in range(n):
+        for turn in range(1, 3):
+            game_state[0][i][turn] = MOUSE_WIN
+            game_state[i][i][turn] = CAT_WIN
+
+    # Queue for breadth-first search
+    queue = deque()
+    
+    # Initialize the queue with all possible moves of the cat
+    for i in range(1, n):
+        for turn in range(1, 3):
+            game_state[i][i][turn] = CAT_WIN
+            queue.append((0, i, turn, CAT_WIN))
+            game_state[0][i][turn] = MOUSE_WIN
+            queue.append((i, i, turn, MOUSE_WIN))
+
+    while queue:
+        mouse_pos, cat_pos, turn, winner = queue.popleft()
+        
+        for parent in graph[turn == CAT and mouse_pos]:
+            if game_state[parent][cat_pos][3 - turn] == DRAW:
+                if 3 - turn == winner:
+                    game_state[parent][cat_pos][3 - turn] = winner
+                    queue.append((parent, cat_pos, 3 - turn, winner))
+                elif all(game_state[parent][cat_pos][3 - turn] == winner
+                break
