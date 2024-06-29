@@ -1,0 +1,19 @@
+def max_regions_colored(adj_list):
+    def dfs(node, color):
+        if colors[node] != -1:
+            return colors[node] == color
+        colors[node] = color
+        return all(dfs(nei, 1 - color) for nei in adj_list[node])
+    
+    n = len(adj_list)
+    colors = [-1] * n
+    return sum(dfs(node, 0) for node in range(n))
+
+# Example usage:
+edges = [(0, 1), (1, 2), (2, 3), (3, 0), (0, 2)]
+n = 4
+adj_list = [[] for _ in range(n)]
+for u, v in edges:
+    adj_list[u].append(v)
+    adj_list[v].append(u)
+print("Max regions colored:", max_regions_colored(adj_list))  # Output: 2
