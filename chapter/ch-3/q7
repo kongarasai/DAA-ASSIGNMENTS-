@@ -1,29 +1,41 @@
 def binary_search(arr, key):
     low, high = 0, len(arr) - 1
     comparisons = 0
-    
+
     while low <= high:
-        mid = (low + high) // 2
         comparisons += 1
-        
-        if arr[mid] < key:
-            low = mid + 1
-        elif arr[mid] > key:
-            high = mid - 1
-        else:
+        mid = (low + high) // 2
+        if arr[mid] == key:
             return mid, comparisons
-    
-    return -1, comparisons
+        elif arr[mid] < key:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return -1, comparisons  # Element not found
 
 # Test Cases
-arr1_sorted = [5, 10, 15, 20, 25, 30, 35, 40, 45]
+arr1 = [5, 10, 15, 20, 25, 30, 35, 40, 45]
 key1 = 20
 
-result1, comparisons1 = binary_search(arr1_sorted, key1)
+arr2 = [10, 20, 30, 40, 50, 60]
+key2 = 50
+
+arr3 = [21, 32, 40, 54, 65, 76, 87]
+key3 = 32
+
+# Running test cases
+index1, comparisons1 = binary_search(arr1, key1)
 print(f"Test Case 1:")
-print(f"Index of {key1}: {result1}")
+print(f"Index of {key1}: {index1}")
 print(f"Number of Comparisons: {comparisons1}")
 
-key2 = 50
-result2, comparisons2 = binary_search(arr1_sorted, key2)
-print(f"\
+index2, comparisons2 = binary_search(arr2, key2)
+print(f"\nTest Case 2:")
+print(f"Index of {key2}: {index2}")
+print(f"Number of Comparisons: {comparisons2}")
+
+index3, comparisons3 = binary_search(arr3, key3)
+print(f"\nTest Case 3:")
+print(f"Index of {key3}: {index3}")
+print(f"Number of Comparisons: {comparisons3}")
