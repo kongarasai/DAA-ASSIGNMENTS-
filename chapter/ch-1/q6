@@ -1,0 +1,18 @@
+def process_list(nums):
+    if not nums:
+        return "The list is empty."
+    
+    # Sort the list using an efficient sorting algorithm (Timsort)
+    sorted_nums = sorted(nums)
+    
+    # The maximum element is the last element in the sorted list
+    max_element = sorted_nums[-1]
+    
+    return max_element
+
+# Test cases
+print(process_list([]))                 # Expected Output: "The list is empty."
+print(process_list([5]))                # Expected Output: 5
+print(process_list([3, 3, 3, 3, 3]))    # Expected Output: 3
+print(process_list([1, 2, 3, 4, 5]))    # Expected Output: 5
+print(process_list([-10, 2, 3, -4, 5])) # Expected Output: 5
