@@ -1,0 +1,15 @@
+def handle_lists(lst):
+    return lst
+
+# Test Cases:
+tests = [
+    [],             # Test Case 1
+    [1],            # Test Case 2
+    [7, 7, 7, 7],   # Test Case 3
+    [-5, -1, -3, -2, -4]  # Test Case 4
+]
+
+for i, test in enumerate(tests, start=1):
+    print(f"Test Case {i}: Input: {test}")
+    print(f"Expected Output: {handle_lists(test)}")
+    print()
