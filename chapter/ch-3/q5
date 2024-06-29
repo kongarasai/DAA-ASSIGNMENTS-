@@ -1,0 +1,26 @@
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    pivot = arr[0]
+    left = [x for x in arr[1:] if x <= pivot]
+    right = [x for x in arr[1:] if x > pivot]
+    
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
+# Test Cases
+arr1_unsorted = [10, 16, 8, 12, 15, 6, 3, 9, 5]
+arr2_unsorted = [12, 4, 78, 23, 45, 67, 89, 1]
+arr3_unsorted = [38, 27, 43, 3, 9, 82, 10]
+
+sorted1 = quick_sort(arr1_unsorted)
+print(f"Test Case 1:")
+print(f"Sorted Array: {sorted1}")
+
+sorted2 = quick_sort(arr2_unsorted)
+print(f"\nTest Case 2:")
+print(f"Sorted Array: {sorted2}")
+
+sorted3 = quick_sort(arr3_unsorted)
+print(f"\nTest Case 3:")
+print(f"Sorted Array: {sorted3}")
