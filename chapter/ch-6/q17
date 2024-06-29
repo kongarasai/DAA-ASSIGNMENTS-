@@ -1,0 +1,19 @@
+import collections
+
+def universal_strings(words1, words2):
+    def is_subset(small, big):
+        count_small = collections.Counter(small)
+        count_big = collections.Counter(big)
+        return all(count_small[char] <= count_big[char] for char in count_small)
+    
+    result = []
+    for word1 in words1:
+        if all(is_subset(word1, word2) for word2 in words2):
+            result.append(word1)
+    return result
+
+# Example usage:
+words1 = ["amazon", "apple", "facebook", "google", "leetcode"]
+words2 = ["e", "o"]
+print("Universal Strings:")
+print(universal_strings(words1, words2))  # Output: ["facebook", "google", "leetcode"]
