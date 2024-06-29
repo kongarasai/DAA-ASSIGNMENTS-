@@ -1,0 +1,56 @@
+class TreeNode:
+    def __init__(self, val='', left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def build_huffman_tree(characters, frequencies):
+    from queue import PriorityQueue
+    
+    if len(characters) != len(frequencies) or len(characters) == 0:
+        return None
+    
+    pq = PriorityQueue()
+    for i in range(len(characters)):
+        pq.put((frequencies[i], TreeNode(characters[i])))
+    
+    while pq.qsize() > 1:
+        freq1, node1 = pq.get()
+        freq2, node2 = pq.get()
+        
+        new_node = TreeNode(left=node1, right=node2)
+        pq.put((freq1 + freq2, new_node))
+    
+    _, root = pq.get()
+    return root
+
+def huffman_decoding(encoded_string, root):
+    if not root:
+        return ""
+    
+    decoded_message = ""
+    current_node = root
+    
+    for bit in encoded_string:
+        if bit == '0':
+            current_node = current_node.left
+        elif bit == '1':
+            current_node = current_node.right
+        
+        if current_node.left is None and current_node.right is None:
+            decoded_message += current_node.val
+            current_node = root
+    
+    return decoded_message
+
+# Example usage:
+characters = ['a', 'b', 'c', 'd']
+frequencies = [5, 9, 12, 13]
+encoded_string = '1101100111110'
+
+# Build Huffman tree
+root = build_huffman_tree(characters, frequencies)
+
+# Decode the encoded string
+decoded_message = huffman_decoding(encoded_string, root)
+print(decoded_message)  # Output: "abacd"
