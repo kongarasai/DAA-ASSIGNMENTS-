@@ -1,0 +1,41 @@
+import sys
+
+def optimal_bst(keys, freq):
+    n = len(keys)
+    cost = [[0] * (n) for _ in range(n)]
+    root = [[0] * (n) for _ in range(n)]
+
+    for i in range(n):
+        cost[i][i] = freq[i]
+        root[i][i] = i + 1
+
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            cost[i][j] = sys.maxsize
+            for k in range(i, j + 1):
+                left_cost = cost[i][k - 1] if k > i else 0
+                right_cost = cost[k + 1][j] if k < j else 0
+                current_cost = left_cost + right_cost + sum(freq[i:j + 1])
+                if current_cost < cost[i][j]:
+                    cost[i][j] = current_cost
+                    root[i][j] = k + 1
+
+    print("Cost Table:")
+    print_cost_table(cost, n)
+    print("\nRoot Table:")
+    print_cost_table(root, n)
+
+    return cost[0][n - 1]
+
+def print_cost_table(table, n):
+    for i in range(n):
+        for j in range(n):
+            print(table[i][j], end="\t")
+        print()
+
+# Test Case for Problem 15
+keys = ["A", "B", "C", "D"]
+freq = [0.1, 0.2, 0.4, 0.3]
+obst_cost = optimal_bst(keys, freq)
+print(f"\nCost of Optimal Binary Search Tree: {obst_cost}")
