@@ -1,0 +1,22 @@
+def insertion_sort(arr):
+    n = len(arr)
+    for i in range(1, n):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+
+# Test Cases:
+test_cases = [
+    [3, 1, 4, 1, 5, 9, 2, 6, 5, 3],
+    [5, 5, 5, 5, 5],
+    [2, 3, 1, 3, 2, 1, 1, 3]
+]
+
+for i, test in enumerate(test_cases, start=1):
+    print(f"Test Case {i}: Input: {test}")
+    insertion_sort(test)
+    print(f"Output: {test}")
+    print()
