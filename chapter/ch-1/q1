@@ -1,0 +1,16 @@
+def first_palindromic_string(words):
+    def is_palindrome(word):
+        return word == word[::-1]
+    
+    for word in words:
+        if is_palindrome(word):
+            return word
+    
+    return ""
+
+# Example usage:
+words1 = ["abc","car","ada","racecar","cool"]
+words2 = ["notapalindrome","racecar"]
+
+print(first_palindromic_string(words1))  # Output: "ada"
+print(first_palindromic_string(words2))  # Output: "racecar"
