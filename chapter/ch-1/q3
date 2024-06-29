@@ -1,0 +1,19 @@
+def sum_of_squares_of_distinct_counts(nums):
+    n = nums.length
+    total_sum = 0
+    
+    # Iterate through all possible subarrays
+    for i in range(n):
+        # Use a set to keep track of distinct elements in the current subarray
+        distinct_elements = set()
+        for j in range(i, n):
+            distinct_elements.add(nums[j])
+            # Calculate the distinct count and its square
+            distinct_count = len(distinct_elements)
+            total_sum += distinct_count * distinct_count
+    
+    return total_sum
+
+# Example usage:
+nums = [1, 2, 1]
+print(sum_of_squares_of_distinct_counts(nums))  # Output: 15
