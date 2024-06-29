@@ -1,0 +1,27 @@
+def has_hamiltonian_cycle(edges, n):
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    
+    def dfs(node, visited, path_len):
+        if path_len == n:
+            return True
+        visited[node] = True
+        for nei in adj[node]:
+            if not visited[nei]:
+                if dfs(nei, visited, path_len + 1):
+                    return True
+        visited[node] = False
+        return False
+    
+    visited = [False] * n
+    for start in range(n):
+        if dfs(start, visited, 1):
+            return True
+    return False
+
+# Example usage:
+edges = [(0, 1), (1, 2), (2, 3), (3, 0), (0, 2), (2, 4), (4, 0)]
+n = 5
+print("Has Hamiltonian cycle:", has_hamiltonian_cycle(edges, n))  # Output: True
