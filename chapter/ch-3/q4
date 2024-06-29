@@ -1,31 +1,31 @@
 def merge_sort_count_comparisons(arr):
     if len(arr) <= 1:
         return arr, 0
-    
+
     mid = len(arr) // 2
     left, left_count = merge_sort_count_comparisons(arr[:mid])
     right, right_count = merge_sort_count_comparisons(arr[mid:])
-    merged, merge_count = merge_count(left, right)
-    
-    return merged, (left_count + right_count + merge_count)
+    merged, merge_count = merge_count_comparisons(left, right)
 
-def merge_count(left, right):
+    return merged, left_count + right_count + merge_count
+
+def merge_count_comparisons(left, right):
     sorted_arr = []
     count = 0
     i = j = 0
-    
+
     while i < len(left) and j < len(right):
+        count += 1  # Count the comparison
         if left[i] < right[j]:
             sorted_arr.append(left[i])
             i += 1
         else:
             sorted_arr.append(right[j])
             j += 1
-            count += len(left) - i
-    
+
     sorted_arr.extend(left[i:])
     sorted_arr.extend(right[j:])
-    
+
     return sorted_arr, count
 
 # Test Cases
