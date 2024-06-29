@@ -1,0 +1,31 @@
+def full_justify(words, maxWidth):
+    result = []
+    cur_line = []
+    cur_len = 0
+    for word in words:
+        if cur_len + len(cur_line) + len(word) > maxWidth:
+            spaces_needed = maxWidth - cur_len
+            if len(cur_line) == 1:
+                result.append(cur_line[0] + ' ' * spaces_needed)
+            else:
+                spaces_between = spaces_needed // (len(cur_line) - 1)
+                extra_spaces = spaces_needed % (len(cur_line) - 1)
+                justified_line = cur_line[0]
+                for i in range(1, len(cur_line)):
+                    spaces = ' ' * (spaces_between + (1 if i <= extra_spaces else 0))
+                    justified_line += spaces + cur_line[i]
+                result.append(justified_line)
+            cur_line, cur_len = [], 0
+        cur_line += [word]
+        cur_len += len(word)
+    result.append(' '.join(cur_line).ljust(maxWidth))
+    return result
+
+# Test Case
+words1 = ["This", "is", "an", "example", "of", "text", "justification."]
+maxWidth1 = 16
+print(full_justify(words1, maxWidth1))
+
+words2 = ["What", "must", "be", "acknowledgment", "shall", "be"]
+maxWidth2 = 16
+print(full_justify(words2, maxWidth2))
