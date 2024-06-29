@@ -1,5 +1,5 @@
 def sum_of_squares_of_distinct_counts(nums):
-    n = nums.length
+    n = len(nums)
     total_sum = 0
     
     # Iterate through all possible subarrays
