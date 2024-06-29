@@ -1,0 +1,33 @@
+class WordFilter:
+    def __init__(self, words):
+        self.prefixes = {}
+        self.suffixes = {}
+        for index, word in enumerate(words):
+            length = len(word)
+            for i in range(length + 1):
+                prefix = word[:i]
+                if prefix not in self.prefixes:
+                    self.prefixes[prefix] = []
+                self.prefixes[prefix].append(index)
+                suffix = word[i:]
+                if suffix not in self.suffixes:
+                    self.suffixes[suffix] = []
+                self.suffixes[suffix].append(index)
+    
+    def f(self, pref, suff):
+        if pref in self.prefixes and suff in self.suffixes:
+            prefix_indices = self.prefixes[pref]
+            suffix_indices = self.suffixes[suff]
+            i, j = len(prefix_indices) - 1, len(suffix_indices) - 1
+            while i >= 0 and j >= 0:
+                if prefix_indices[i] == suffix_indices[j]:
+                    return prefix_indices[i]
+                elif prefix_indices[i] > suffix_indices[j]:
+                    i -= 1
+                else:
+                    j -= 1
+        return -1
+
+# Test Case
+wordFilter = WordFilter(["apple"])
+print(wordFilter.f("a", "e"))  # Output: 0
