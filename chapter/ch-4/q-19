@@ -1,0 +1,18 @@
+def unique_paths(m, n):
+    dp = [[0] * n for _ in range(m)]
+    
+    for i in range(m):
+        for j in range(n):
+            if i == 0 or j == 0:
+                dp[i][j] = 1
+            else:
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
+    
+    return dp[m-1][n-1]
+
+# Test cases for Problem 19
+m1, n1 = 3, 7
+print(unique_paths(m1, n1))  # Output: 28
+
+m2, n2 = 3, 2
+print(unique_paths(m2, n2))  # Output: 3
