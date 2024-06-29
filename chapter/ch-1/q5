@@ -1,0 +1,15 @@
+def find_max(nums):
+    # Initialize the maximum value to the first element of the list
+    max_value = nums[0]
+    
+    # Iterate through the list starting from the second element
+    for num in nums[1:]:
+        if num > max_value:
+            max_value = num
+            
+    return max_value
+
+# Test cases
+print(find_max([1, 2, 3, 4, 5]))  # Expected Output: 5
+print(find_max([7, 7, 7, 7, 7]))  # Expected Output: 7
+print(find_max([-10, 2, 3, -4, 5]))  # Expected Output: 5
