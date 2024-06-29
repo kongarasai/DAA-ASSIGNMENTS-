@@ -1,0 +1,17 @@
+def find_max(nums):
+    if not nums:  # Check for an empty list
+        return "The list is empty."
+    
+    max_value = nums[0]
+    
+    for num in nums[1:]:
+        if num > max_value:
+            max_value = num
+            
+    return max_value
+
+# Test cases
+print(find_max([1, 2, 3, 4, 5]))  # Expected Output: 5
+print(find_max([7, 7, 7, 7, 7]))  # Expected Output: 7
+print(find_max([-10, 2, 3, -4, 5]))  # Expected Output: 5
+print(find_max([]))  # Expected Output: "The list is empty."
