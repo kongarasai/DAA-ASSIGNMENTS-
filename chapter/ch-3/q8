@@ -1,0 +1,23 @@
+def binary_search(arr, key):
+    low, high = 0, len(arr) - 1
+    comparisons = 0
+
+    while low <= high:
+        comparisons += 1
+        mid = (low + high) // 2
+        print(f"Step {comparisons}: low = {low}, high = {high}, mid = {mid}")
+        if arr[mid] == key:
+            return mid, comparisons
+        elif arr[mid] < key:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return -1, comparisons  # Element not found
+
+# Test Case
+arr = [3, 9, 14, 19, 25, 31, 42, 47, 53]
+key = 31
+index, comparisons = binary_search(arr, key)
+print(f"\nOutput: Index of {key}: {index}")
+print(f"Number of Comparisons: {comparisons}")
