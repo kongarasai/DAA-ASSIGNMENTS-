@@ -1,0 +1,43 @@
+import heapq
+from collections import defaultdict, deque
+
+def max_probability(n, edges, succProb, start, end):
+    graph = defaultdict(list)
+    for i, (u, v) in enumerate(edges):
+        w = succProb[i]
+        graph[u].append((v, w))
+        graph[v].append((u, w))
+
+    pq = [(-1, start)]
+    probs = defaultdict(float)
+    probs[start] = 1
+
+    while pq:
+        curr_prob, node = heapq.heappop(pq)
+        curr_prob = -curr_prob
+
+        if curr_prob < probs[node]:
+            continue
+
+        for neighbor, prob in graph[node]:
+            new_prob = probs[node] * prob
+            if new_prob > probs[neighbor]:
+                probs[neighbor] = new_prob
+                heapq.heappush(pq, (-new_prob, neighbor))
+
+    return probs[end] if probs[end] > 0 else 0.0
+
+# Test cases for Problem 18
+n = 3
+edges = [[0,1],[1,2],[0,2]]
+succProb = [0.5, 0.5, 0.2]
+start = 0
+end = 2
+print(max_probability(n, edges, succProb, start, end))  # Output: 0.25000
+
+n = 3
+edges = [[0,1],[1,2],[0,2]]
+succProb = [0.5, 0.5, 0.3]
+start = 0
+end = 2
+print(max_probability(n, edges, succProb, start, end))  # Output: 0.30000
