@@ -1,0 +1,37 @@
+def solve_n_queens_rectangular(rows, cols):
+    def is_safe(board, row, col):
+        # Check if no queen can attack this cell
+        for i in range(row):
+            if board[i] == col or \
+               board[i] - i == col - row or \
+               board[i] + i == col + row:
+                return False
+        return True
+    
+    def backtrack(board, row):
+        nonlocal solutions
+        if row == rows:
+            solutions.append(["".join(["Q" if col == board[row] else "." for col in range(cols)]) for row in range(rows)])
+            return
+        for col in range(cols):
+            if is_safe(board, row, col):
+                board[row] = col
+                backtrack(board, row + 1)
+                board[row] = -1
+    
+    solutions = []
+    board = [-1] * rows
+    backtrack(board, 0)
+    return solutions
+
+def visualize_n_queens_rectangular(rows, cols):
+    solutions = solve_n_queens_rectangular(rows, cols)
+    for idx, solution in enumerate(solutions):
+        print(f"Solution {idx + 1}:")
+        for row in solution:
+            print(row)
+        print()
+
+# Visualize for an 8×10 board
+print("Visualization for 8×10 board:")
+visualize_n_queens_rectangular(8, 10)
