@@ -1,0 +1,42 @@
+import heapq
+from collections import defaultdict
+
+def network_delay_time(times, n, k):
+    graph = defaultdict(list)
+    for u, v, w in times:
+        graph[u].append((v, w))
+    
+    distances = {i: float('inf') for i in range(1, n + 1)}
+    distances[k] = 0
+    pq = [(0, k)]
+    
+    while pq:
+        curr_dist, node = heapq.heappop(pq)
+        
+        if curr_dist > distances[node]:
+            continue
+        
+        for neighbor, weight in graph[node]:
+            distance = curr_dist + weight
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(pq, (distance, neighbor))
+    
+    max_time = max(distances.values())
+    return max_time if max_time < float('inf') else -1
+
+# Test cases for Problem 22
+times1 = [[2,1,1],[2,3,1],[3,4,1]]
+n1 = 4
+k1 = 2
+print(network_delay_time(times1, n1, k1))  # Output: 2
+
+times2 = [[1,2,1]]
+n2 = 2
+k2 = 1
+print(network_delay_time(times2, n2, k2))  # Output: 1
+
+times3 = [[1,2,1]]
+n3 = 2
+k3 = 2
+print(network_delay_time(times3, n3, k3))  # Output: -1
