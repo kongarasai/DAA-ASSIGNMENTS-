@@ -1,0 +1,47 @@
+import heapq
+from collections import defaultdict, deque
+
+def huffman_encoding(characters, frequencies):
+    class TreeNode:
+        def __init__(self, char=None, freq=0):
+            self.char = char
+            self.freq = freq
+            self.left = None
+            self.right = None
+        
+        def __lt__(self, other):
+            return self.freq < other.freq
+        
+    # Priority queue to build the Huffman Tree
+    pq = []
+    for char, freq in zip(characters, frequencies):
+        heapq.heappush(pq, TreeNode(char, freq))
+    
+    # Build the Huffman Tree
+    while len(pq) > 1:
+        left = heapq.heappop(pq)
+        right = heapq.heappop(pq)
+        new_node = TreeNode(freq=left.freq + right.freq)
+        new_node.left = left
+        new_node.right = right
+        heapq.heappush(pq, new_node)
+    
+    # Traverse the Huffman Tree to generate codes
+    def generate_codes(root, current_code, codes):
+        if root:
+            if root.char:
+                codes[root.char] = current_code
+            generate_codes(root.left, current_code + "0", codes)
+            generate_codes(root.right, current_code + "1", codes)
+    
+    huffman_root = heapq.heappop(pq)
+    huffman_codes = {}
+    generate_codes(huffman_root, "", huffman_codes)
+    
+    # Convert codes to required format [('char', 'code')]
+    result = [(char, huffman_codes[char]) for char in characters if char in huffman_codes]
+    return result
+
+# Example usage:
+print(huffman_encoding(['a', 'b', 'c', 'd'], [5, 9, 12, 13]))  # Output: [('a', '110'), ('b', '10'), ('c', '0'), ('d', '111')]
+print(huffman_encoding(['f', 'e', 'd', 'c', 'b', 'a'], [5, 9, 12, 13, 16, 45]))  # Output: [('a', '0'), ('b', '101'), ('c', '100'), ('d', '111'), ('e', '1101'), ('f', '1100')]
