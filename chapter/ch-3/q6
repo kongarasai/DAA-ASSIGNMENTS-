@@ -1,0 +1,28 @@
+def quick_sort_middle_pivot(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    pivot = arr[mid]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    
+    return quick_sort_middle_pivot(left) + middle + quick_sort_middle_pivot(right)
+
+# Test Cases
+arr1_unsorted = [19, 72, 35, 46, 58, 91, 22, 31]
+arr2_unsorted = [31, 23, 35, 27, 11, 21, 15, 28]
+arr3_unsorted = [22, 34, 25, 36, 43, 67, 52, 13, 65, 17]
+
+sorted1 = quick_sort_middle_pivot(arr1_unsorted)
+print(f"Test Case 1:")
+print(f"Sorted Array: {sorted1}")
+
+sorted2 = quick_sort_middle_pivot(arr2_unsorted)
+print(f"\nTest Case 2:")
+print(f"Sorted Array: {sorted2}")
+
+sorted3 = quick_sort_middle_pivot(arr3_unsorted)
+print(f"\nTest Case 3:")
+print(f"Sorted Array: {sorted3}")
