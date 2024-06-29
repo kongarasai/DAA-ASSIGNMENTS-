@@ -1,0 +1,63 @@
+def closest_pair(points):
+    points.sort()  # Sort by x-coordinates first
+    
+    def brute_force_closest(points, n):
+        min_dist = float('inf')
+        for i in range(n):
+            for j in range(i + 1, n):
+                dist = euclidean_distance(points[i], points[j])
+                if dist < min_dist:
+                    min_dist = dist
+                    pair = (points[i], points[j])
+        return min_dist, pair
+    
+    def strip_closest(strip, size, d):
+        min_dist = d
+        strip.sort(key=lambda point: point[1])  # Sort by y-coordinates
+        
+        for i in range(size):
+            j = i + 1
+            while j < size and (strip[j][1] - strip[i][1]) < min_dist:
+                dist = euclidean_distance(strip[i], strip[j])
+                if dist < min_dist:
+                    min_dist = dist
+                    pair = (strip[i], strip[j])
+                j += 1
+        
+        return min_dist, pair
+    
+    def closest_util(points, n):
+        if n <= 3:
+            return brute_force_closest(points, n)
+        
+        mid = n // 2
+        mid_point = points[mid]
+        
+        dl, pair_l = closest_util(points[:mid], mid)
+        dr, pair_r = closest_util(points[mid:], n - mid)
+        
+        d = min(dl, dr)
+        if dl < dr:
+            closest_pair = pair_l
+        else:
+            closest_pair = pair_r
+        
+        strip = []
+        for point in points:
+            if abs(point[0] - mid_point[0]) < d:
+                strip.append(point)
+        
+        ds, pair_s = strip_closest(strip, len(strip), d)
+        
+        if ds < d:
+            return ds, pair_s
+        else:
+            return d, closest_pair
+    
+    points.sort()  # Sort by x-coordinates
+    return closest_util(points, len(points))
+
+# Test case
+points = [(10, 0), (11, 5), (5, 3), (9, 3.5), (15, 3), (12.5, 7), (6, 6.5), (7.5, 4.5)]
+min_distance, closest_pair = closest_pair(points)
+print(f"Closest pair: {closest_pair} Minimum distance: {min_distance}")
