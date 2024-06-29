@@ -1,0 +1,14 @@
+def longest_palindromic_substring(s):
+    n = len(s)
+    if n == 0:
+        return ""
+    longest = s[0]
+    for i in range(n):
+        for j in range(i, n):
+            if s[i:j + 1] == s[i:j + 1][::-1] and len(s[i:j + 1]) > len(longest):
+                longest = s[i:j + 1]
+    return longest
+
+# Test Cases
+print(longest_palindromic_substring("babad"))  # Expected Output: "bab" or "aba"
+print(longest_palindromic_substring("cbbd"))   # Expected Output: "bb"
