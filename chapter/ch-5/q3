@@ -1,0 +1,24 @@
+def min_max_working_time(jobs, k):
+    def can_assign(max_time):
+        workers = [0] * k
+        for job in jobs:
+            min_worker = min(workers)
+            if min_worker + job > max_time:
+                return False
+            workers[workers.index(min_worker)] += job
+        return True
+    
+    left, right = max(jobs), sum(jobs)
+    
+    while left < right:
+        mid = (left + right) // 2
+        if can_assign(mid):
+            right = mid
+        else:
+            left = mid + 1
+    
+    return left
+
+# Example usage:
+print(min_max_working_time([3, 2, 3], 3))  # Output: 3
+print(min_max_working_time([1, 2, 4, 7, 8], 2))  # Output: 11
