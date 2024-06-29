@@ -1,0 +1,41 @@
+def partition(arr, low, high, pivot):
+    pivot_index = arr.index(pivot)
+    arr[pivot_index], arr[high] = arr[high], arr[pivot_index]
+    i = low
+    for j in range(low, high):
+        if arr[j] < pivot:
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+    arr[i], arr[high] = arr[high], arr[i]
+    return i
+
+def median_of_medians(arr, k):
+    if len(arr) <= 5:
+        return sorted(arr)[k]
+    
+    # Split arr into sublists of 5 elements each
+    sublists = [arr[i:i + 5] for i in range(0, len(arr), 5)]
+    
+    # Find the median of each sublist
+    medians = [sorted(sublist)[len(sublist) // 2] for sublist in sublists]
+    
+    # Find the median of the medians recursively
+    if len(medians) <= 5:
+        pivot = sorted(medians)[len(medians) // 2]
+    else:
+        pivot = median_of_medians(medians, len(medians) // 2)
+    
+    # Partition the array around the pivot
+    pivot_index = partition(arr, 0, len(arr) - 1, pivot)
+    
+    # Recursively find the k-th smallest element
+    if k < pivot_index:
+        return median_of_medians(arr[:pivot_index], k)
+    elif k > pivot_index:
+        return median_of_medians(arr[pivot_index + 1:], k - pivot_index - 1)
+    else:
+        return arr[pivot_index]
+
+# Test Cases
+print(median_of_medians([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 6))  # Expected Output: 7
+print(median_of_medians([23, 17, 31, 44, 55, 21, 20, 18, 19, 27], 5))  # Expected Output: 23
