@@ -1,0 +1,50 @@
+import itertools
+
+# Function to calculate total cost of assignment
+def total_cost(assignment, cost_matrix):
+    total = 0
+    for worker, task in assignment:
+        total += cost_matrix[worker][task]
+    return total
+
+# Function to solve assignment problem using exhaustive search
+def assignment_problem(cost_matrix):
+    n = len(cost_matrix)
+    if n == 0:
+        return None, None
+    
+    min_cost = float('inf')
+    optimal_assignment = None
+    
+    # Generate all permutations of worker indices
+    for perm in itertools.permutations(range(n)):
+        assignment = [(i, perm[i]) for i in range(n)]
+        cost = total_cost(assignment, cost_matrix)
+        if cost < min_cost:
+            min_cost = cost
+            optimal_assignment = assignment
+    
+    return optimal_assignment, min_cost
+
+# Test cases
+cost_matrix1 = [
+    [3, 10, 7],
+    [8, 5, 12],
+    [4, 6, 9]
+]
+
+cost_matrix2 = [
+    [15, 9, 4],
+    [8, 7, 18],
+    [6, 12, 11]
+]
+
+assignment1, total_cost1 = assignment_problem(cost_matrix1)
+print("Test Case 1:")
+print(f"Optimal Assignment: {[(f'worker {worker+1}', f'task {task+1}') for worker, task in assignment1]}")
+print(f"Total Cost: {total_cost1}")
+
+assignment2, total_cost2 = assignment_problem(cost_matrix2)
+print("\nTest Case 2:")
+print(f"Optimal Assignment: {[(f'worker {worker+1}', f'task {task+1}') for worker, task in assignment2]}")
+print(f"Total Cost: {total_cost2}")
