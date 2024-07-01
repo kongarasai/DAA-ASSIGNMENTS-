@@ -1,0 +1,30 @@
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        # Find the minimum element in remaining unsorted array
+        min_idx = i
+        for j in range(i+1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        # Swap the found minimum element with the first element
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    return arr
+
+# Example Scenarios
+# 1. Sorting a Random Array
+input1 = [5, 2, 9, 1, 5, 6]
+output1 = selection_sort(input1.copy())
+print(f"Input: {input1}")
+print(f"Output: {output1}")
+
+# 2. Sorting a Reverse Sorted Array
+input2 = [10, 8, 6, 4, 2]
+output2 = selection_sort(input2.copy())
+print(f"Input: {input2}")
+print(f"Output: {output2}")
+
+# 3. Sorting an Already Sorted Array
+input3 = [1, 2, 3, 4, 5]
+output3 = selection_sort(input3.copy())
+print(f"Input: {input3}")
+print(f"Output: {output3}")
