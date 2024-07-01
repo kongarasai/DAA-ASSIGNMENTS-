@@ -1,3 +1,5 @@
+from typing import List
+
 class Solution:
     def rob(self, nums: List[int]) -> int:
         def _rob(nums):
@@ -9,3 +11,9 @@ class Solution:
         if len(nums) == 1:
             return nums[0]
         return max(_rob(nums[1:]), _rob(nums[:-1]))
+
+# Example test case
+if __name__ == "__main__":
+    solution = Solution()
+    nums = [2, 3, 2]
+    print("Maximum amount that can be robbed is:", solution.rob(nums))
